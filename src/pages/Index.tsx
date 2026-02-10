@@ -12,7 +12,7 @@ const Index = () => {
     twitter: "",
     company: "",
     companyUrl: "",
-    logoText: "",
+    logoUrl: "",
   });
   const [darkPreview, setDarkPreview] = useState(false);
   const [copied, setCopied] = useState(false);
