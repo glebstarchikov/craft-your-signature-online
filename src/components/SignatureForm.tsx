@@ -90,7 +90,7 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         label="Company URL"
         value={data.companyUrl}
         onChange={(v) => update("companyUrl", v)}
-        placeholder="https://starcoai.com"
+        placeholder="https://example.com"
       />
       <ClearableInput
         label="Logo URL"

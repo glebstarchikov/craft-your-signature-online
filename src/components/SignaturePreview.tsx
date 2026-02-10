@@ -17,7 +17,7 @@ interface SignaturePreviewProps {
 }
 
 const DEFAULT_COMPANY = "Starco";
-const DEFAULT_URL = "https://starcoai.com";
+const DEFAULT_URL = "https://example.com";
 
 const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewProps) => {
   const phone = data.phone || "+1 (555) 123-4567";
@@ -35,9 +35,7 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Preview
-          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Preview</span>
         </div>
         <button
           onClick={onToggleDark}
@@ -143,7 +141,9 @@ export function generateSignatureHTML(data: SignatureData): string {
 
   // Name row
   if (data.name.trim()) {
-    rows.push(`<tr><td style="padding-bottom:4px;"><span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name}</span></td></tr>`);
+    rows.push(
+      `<tr><td style="padding-bottom:4px;"><span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name}</span></td></tr>`,
+    );
   }
 
   // Title row
@@ -152,7 +152,9 @@ export function generateSignatureHTML(data: SignatureData): string {
   const hasContact = hasPhone || hasTwitter;
   if (data.title.trim()) {
     const titleText = hasCompany ? `${data.title} · ${data.company}` : data.title;
-    rows.push(`<tr><td style="padding-bottom:${hasContact ? "10" : "0"}px;"><span style="font-size:13px;color:#737373;">${titleText}</span></td></tr>`);
+    rows.push(
+      `<tr><td style="padding-bottom:${hasContact ? "10" : "0"}px;"><span style="font-size:13px;color:#737373;">${titleText}</span></td></tr>`,
+    );
   }
 
   // Contact row
@@ -161,9 +163,13 @@ export function generateSignatureHTML(data: SignatureData): string {
     if (hasPhone) parts.push(data.phone);
     if (hasTwitter) {
       const handle = data.twitter.replace("@", "");
-      parts.push(`<a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${data.twitter}</a>`);
+      parts.push(
+        `<a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${data.twitter}</a>`,
+      );
     }
-    rows.push(`<tr><td style="padding-top:10px;border-top:1px solid #e5e5e5;"><span style="font-size:13px;color:#737373;">${parts.join(" · ")}</span></td></tr>`);
+    rows.push(
+      `<tr><td style="padding-top:10px;border-top:1px solid #e5e5e5;"><span style="font-size:13px;color:#737373;">${parts.join(" · ")}</span></td></tr>`,
+    );
   }
 
   if (rows.length === 0) return "";
