@@ -126,18 +126,36 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
 export default SignaturePreview;
 
 export function generateSignatureHTML(data: SignatureData): string {
-  const companyName = data.company || "Starco";
-  const companyUrl = data.companyUrl || "https://starcoai.com";
+  const rows: string[] = [];
 
-  const logoHtml = data.logoUrl
-    ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img src="${data.logoUrl}" alt="${companyName}" style="display:block;max-height:40px;" /></a>`
-    : `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${companyName}</a>`;
+  // Company/logo row
+  const hasCompany = !!data.company.trim() || !!data.logoUrl.trim();
+  if (hasCompany) {
+    const companyName = data.company || "";
+    const companyUrl = data.companyUrl || "";
+    const logoHtml = data.logoUrl
+      ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img src="${data.logoUrl}" alt="${companyName}" style="display:block;max-height:40px;" /></a>`
+      : companyUrl
+        ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${companyName}</a>`
+        : `<span style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;">${companyName}</span>`;
+    rows.push(`<tr><td style="padding-bottom:12px;">${logoHtml}</td></tr>`);
+  }
 
+  // Name row
+  if (data.name.trim()) {
+    rows.push(`<tr><td style="padding-bottom:4px;"><span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name}</span></td></tr>`);
+  }
+
+  // Title row
   const hasPhone = !!data.phone.trim();
   const hasTwitter = !!data.twitter.trim();
   const hasContact = hasPhone || hasTwitter;
+  if (data.title.trim()) {
+    const titleText = hasCompany ? `${data.title} · ${data.company}` : data.title;
+    rows.push(`<tr><td style="padding-bottom:${hasContact ? "10" : "0"}px;"><span style="font-size:13px;color:#737373;">${titleText}</span></td></tr>`);
+  }
 
-  let contactHtml = "";
+  // Contact row
   if (hasContact) {
     const parts: string[] = [];
     if (hasPhone) parts.push(data.phone);
@@ -145,31 +163,10 @@ export function generateSignatureHTML(data: SignatureData): string {
       const handle = data.twitter.replace("@", "");
       parts.push(`<a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${data.twitter}</a>`);
     }
-    contactHtml = `
-    <tr>
-      <td style="padding-top:10px;border-top:1px solid #e5e5e5;">
-        <span style="font-size:13px;color:#737373;">${parts.join(" · ")}</span>
-      </td>
-    </tr>`;
+    rows.push(`<tr><td style="padding-top:10px;border-top:1px solid #e5e5e5;"><span style="font-size:13px;color:#737373;">${parts.join(" · ")}</span></td></tr>`);
   }
 
-  return `<table cellpadding="0" cellspacing="0" style="font-family:'DM Sans',Arial,sans-serif;font-size:14px;">
-  <tbody>
-    <tr>
-      <td style="padding-bottom:12px;">
-        ${logoHtml}
-      </td>
-    </tr>
-    <tr>
-      <td style="padding-bottom:4px;">
-        <span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name || "Gleb Starchikov"}</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding-bottom:${hasContact ? "10" : "0"}px;">
-        <span style="font-size:13px;color:#737373;">${data.title || "Product Owner"} · ${companyName}</span>
-      </td>
-    </tr>${contactHtml}
-  </tbody>
-</table>`;
+  if (rows.length === 0) return "";
+
+  return `<table cellpadding="0" cellspacing="0" style="font-family:'DM Sans',Arial,sans-serif;font-size:14px;"><tbody>${rows.join("")}</tbody></table>`;
 }
