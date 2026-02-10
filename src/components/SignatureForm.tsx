@@ -92,27 +92,12 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         onChange={(v) => update("companyUrl", v)}
         placeholder="https://starcoai.com"
       />
-      <div className="space-y-1.5">
-        <ClearableInput
-          label="Logo URL"
-          value={data.logoUrl}
-          onChange={(v) => update("logoUrl", v)}
-          placeholder="https://example.com/logo.png"
-        />
-        {data.logoUrl && (
-          <div className="flex items-center gap-2 rounded-lg border border-input bg-muted/30 p-2">
-            <img
-              src={data.logoUrl}
-              alt="Logo preview"
-              className="max-h-8 max-w-[120px] object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-            />
-            <span className="text-xs text-muted-foreground">Preview</span>
-          </div>
-        )}
-      </div>
+      <ClearableInput
+        label="Logo URL"
+        value={data.logoUrl}
+        onChange={(v) => update("logoUrl", v)}
+        placeholder="https://example.com/logo.png"
+      />
     </div>
   );
 };
