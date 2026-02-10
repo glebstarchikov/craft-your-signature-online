@@ -1,17 +1,19 @@
 
 
-## Show Phone and Twitter Defaults in Preview
+## Fix: Only Include Filled Fields in Exported HTML
 
-Currently, the name, title, and company fields show placeholder defaults in the preview when empty, but phone and twitter do not. This makes them invisible until the user types something. We'll add fallback defaults so the preview always shows a complete, realistic signature.
+The preview should show placeholder defaults for phone and twitter when empty, but the **copied/exported HTML** should omit those fields entirely if the user didn't fill them in.
 
 ### Changes
 
 **`src/components/SignaturePreview.tsx`**
 
-- Update `hasContact` to always be true when fallback values would apply (i.e., treat empty phone/twitter as having defaults)
-- Display `data.phone || "+1 (555) 123-4567"` instead of just `data.phone`
-- Display `data.twitter || "@exampletag"` instead of just `data.twitter`
-- Apply the same changes in the `generateSignatureHTML` function
+The preview component already works correctly (shows defaults visually). Only the `generateSignatureHTML` function needs to change:
 
-This way the preview always shows the full signature layout, matching the form placeholders exactly.
+- Remove the fallback defaults for `phone` and `twitter` in `generateSignatureHTML`
+- Build the contact row conditionally: only include phone if `data.phone` is provided, only include twitter if `data.twitter` is provided
+- Only render the entire contact row (with the border-top separator) if at least one of phone or twitter is filled
+- Adjust the title row's `padding-bottom` based on whether the contact row exists
+
+This way the preview acts as a realistic example, but the actual signature HTML only contains what the user explicitly entered.
 
