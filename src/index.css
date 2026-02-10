@@ -196,6 +196,36 @@
   .input-elevate:focus {
     box-shadow: 0 2px 8px hsl(161 93% 30% / 0.12);
   }
+
+  .animate-slide-step-right {
+    animation: slideStepRight 0.25s ease-out both;
+  }
+
+  .animate-slide-step-left {
+    animation: slideStepLeft 0.25s ease-out both;
+  }
+}
+
+@keyframes slideStepRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideStepLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeUp {
