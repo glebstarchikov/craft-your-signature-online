@@ -5,6 +5,9 @@ interface SignatureData {
   title: string;
   phone: string;
   twitter: string;
+  company: string;
+  companyUrl: string;
+  logoText: string;
 }
 
 interface SignatureFormProps {
@@ -76,6 +79,24 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         value={data.twitter}
         onChange={(v) => update("twitter", v)}
         placeholder="@janesmith"
+      />
+      <ClearableInput
+        label="Company Name"
+        value={data.company}
+        onChange={(v) => update("company", v)}
+        placeholder="Starco"
+      />
+      <ClearableInput
+        label="Company URL"
+        value={data.companyUrl}
+        onChange={(v) => update("companyUrl", v)}
+        placeholder="https://starcoai.com"
+      />
+      <ClearableInput
+        label="Logo Text"
+        value={data.logoText}
+        onChange={(v) => update("logoText", v)}
+        placeholder="STARCO"
       />
     </div>
   );
