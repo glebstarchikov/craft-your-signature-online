@@ -31,9 +31,12 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Preview
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Preview
+          </span>
+        </div>
         <button
           onClick={onToggleDark}
           className="flex items-center gap-1.5 rounded-lg border border-input px-2.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
