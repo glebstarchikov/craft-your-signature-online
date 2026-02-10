@@ -7,7 +7,7 @@ interface SignatureData {
   twitter: string;
   company: string;
   companyUrl: string;
-  logoText: string;
+  logoUrl: string;
 }
 
 interface SignaturePreviewProps {
@@ -18,13 +18,11 @@ interface SignaturePreviewProps {
 
 const DEFAULT_COMPANY = "Starco";
 const DEFAULT_URL = "https://starcoai.com";
-const DEFAULT_LOGO = "STARCO";
 
 const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewProps) => {
   const hasContact = data.phone || data.twitter;
   const companyName = data.company || DEFAULT_COMPANY;
   const companyUrl = data.companyUrl || DEFAULT_URL;
-  const logoText = data.logoText || DEFAULT_LOGO;
   const bg = darkPreview ? "#1a1a1a" : "#ffffff";
   const fg = darkPreview ? "#e5e5e5" : "#1a1a1a";
   const mutedFg = darkPreview ? "#888888" : "#737373";
@@ -55,20 +53,20 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
           <tbody>
             <tr>
               <td style={{ paddingBottom: 12 }}>
-                <a
-                  href={companyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 700,
-                    letterSpacing: 2,
-                    color: mutedFg,
-                    textDecoration: "none",
-                  }}
-                >
-                  {logoText}
-                </a>
+                {data.logoUrl ? (
+                  <a href={companyUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                    <img src={data.logoUrl} alt={companyName} style={{ display: "block", maxHeight: 40 }} />
+                  </a>
+                ) : (
+                  <a
+                    href={companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 16, fontWeight: 700, letterSpacing: 2, color: mutedFg, textDecoration: "none" }}
+                  >
+                    {companyName}
+                  </a>
+                )}
               </td>
             </tr>
             <tr>
@@ -129,7 +127,10 @@ export function generateSignatureHTML(data: SignatureData): string {
   const hasContact = data.phone || data.twitter;
   const companyName = data.company || "Starco";
   const companyUrl = data.companyUrl || "https://starcoai.com";
-  const logoText = data.logoText || "STARCO";
+
+  const logoHtml = data.logoUrl
+    ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img src="${data.logoUrl}" alt="${companyName}" style="display:block;max-height:40px;" /></a>`
+    : `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${companyName}</a>`;
 
   const contactParts: string[] = [];
   if (data.phone) contactParts.push(data.phone);
@@ -144,7 +145,7 @@ export function generateSignatureHTML(data: SignatureData): string {
   <tbody>
     <tr>
       <td style="padding-bottom:12px;">
-        <a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${logoText}</a>
+        ${logoHtml}
       </td>
     </tr>
     <tr>
