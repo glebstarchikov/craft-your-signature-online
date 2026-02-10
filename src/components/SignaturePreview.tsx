@@ -50,7 +50,7 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
       </div>
 
       <div
-        className="rounded-xl border border-input p-6"
+        className="rounded-xl border border-input p-6 transition-colors duration-300"
         style={{ backgroundColor: bg }}
       >
         {/* Rendered signature */}
