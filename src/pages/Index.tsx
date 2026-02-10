@@ -103,9 +103,9 @@ const Index = () => {
         <footer className="text-center animate-fade-up-delay-4">
           <p className="text-xs text-muted-foreground/60">
             Built by{" "}
-            <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-              Your Name
-            </span>
+            <a href="https://glebstarchikov.nl/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              Gleb Starchikov
+            </a>
           </p>
         </footer>
       </div>
