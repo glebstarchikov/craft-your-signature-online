@@ -1,35 +1,55 @@
 
 
-## Replace Logo Text with Logo URL
+## Memorable Design Refresh
 
-Swap the "Logo Text" field for a "Logo URL" field, and render the logo as an image in both the preview and the copied HTML.
+The goal is to make a recruiter pause and remember this tool when scrolling through your portfolio. The current layout is clean but flat -- we'll add personality through subtle motion, a strong visual hierarchy, and one signature design moment that sticks.
 
-### What changes
+### Design Strategy
 
-- The "Logo Text" input becomes a "Logo URL" input where you paste a link to your logo image
-- The preview shows the actual logo image (with a text fallback if no URL is provided)
-- The copied HTML uses an `<img>` tag with inline styles for email compatibility
-- A small thumbnail preview appears next to the input so you can confirm the image loads
+Keep the minimalist soul but add **craft details** that show you care about polish -- exactly what recruiters look for in a portfolio piece.
 
-### Design details
+### Changes
 
-- Logo image will be constrained to a max height of ~40px to keep the signature compact
-- If the URL is empty, the preview falls back to the company name as plain text (like it does now)
-- The generated HTML uses a standard `<img>` tag with `alt` text set to the company name -- this is the most email-client-compatible approach
+**1. Hero section with personality (Index.tsx)**
+- Replace the plain heading with a two-line layout: a small mono-font label ("Email Signature Generator") above, and a large serif headline below with a word highlighted using an animated underline or gradient accent
+- Add a brief, confident tagline: something like "Craft a signature that leaves an impression." styled in muted italic
+- Add a subtle animated cursor/caret blinking next to the headline for a "live typing" feel
 
-### Files to update
+**2. Card-based layout (Index.tsx)**
+- Wrap the form and preview in distinct card containers with soft shadows and rounded corners
+- Add small section labels ("Details" / "Preview") with a colored dot indicator
+- Visually separate the two sections so the page reads like a polished app, not a plain form
 
-1. **`src/components/SignatureForm.tsx`**
-   - Rename the `logoText` field in the interface to `logoUrl`
-   - Replace the "Logo Text" `ClearableInput` with a "Logo URL" input
-   - Add a small image preview thumbnail below the input when a URL is entered
+**3. Micro-interactions and motion (index.css + components)**
+- Add a gentle floating animation to the preview card (slow, subtle up-down bob) so it feels alive
+- Smooth input focus transitions: inputs slightly elevate (shadow) on focus
+- The "Copy Signature" button gets a satisfying scale-down on click and a brief confetti-like checkmark animation on success
+- Stagger the fade-up animations with slightly longer delays for a more cinematic entrance
 
-2. **`src/components/SignaturePreview.tsx`**
-   - Update the interface: `logoText` becomes `logoUrl`
-   - In the preview, render an `<img>` tag when `logoUrl` is set; fall back to company name text otherwise
-   - Update `generateSignatureHTML` to output an `<img>` tag with inline styles (`display:block; max-height:40px;`) or fall back to text
+**4. Accent color pop**
+- Use the existing teal/green primary color more boldly: colored left border on the form card, a gradient tint on the copy button, and a small colored badge or pill near the headline
+- Keep everything else neutral so the accent pops
 
-3. **`src/pages/Index.tsx`**
-   - Rename `logoText: ""` to `logoUrl: ""` in the initial state
+**5. Footer / credit line (Index.tsx)**
+- Add a minimal footer: "Built by [Your Name]" with a subtle link style -- shows ownership and is portfolio-appropriate
+- Small text, sits at the bottom, doesn't distract
 
-No new dependencies or backend needed.
+**6. Background texture (index.css)**
+- Add a very subtle dot grid or noise texture to the page background using a CSS pattern -- adds depth without heaviness
+- Keep it barely visible so it's felt rather than seen
+
+### Files to modify
+
+1. **`src/pages/Index.tsx`** -- Restructure into hero + card layout, add footer, enhance button interactions
+2. **`src/index.css`** -- Add floating animation keyframes, dot-grid background pattern, input focus elevation styles, button press animation
+3. **`src/components/SignatureForm.tsx`** -- Wrap in card styling with section label and colored dot
+4. **`src/components/SignaturePreview.tsx`** -- Wrap in card styling with section label, add floating animation class
+5. **`src/components/ImportModal.tsx`** -- Minor polish: add enter/exit animation for consistency
+
+### Technical details
+
+- All animations use CSS only (keyframes + transitions) -- no new dependencies
+- The dot-grid background uses a repeating CSS radial-gradient, purely decorative
+- The floating animation is a gentle `translateY` oscillation over ~6 seconds, subtle enough to not distract
+- Button press uses `transform: scale(0.97)` on `:active` for tactile feedback
+- Cards use the existing `--card` color variable with `shadow-md` for elevation
