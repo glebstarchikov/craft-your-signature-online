@@ -52,9 +52,7 @@ const Index = () => {
             </span>
             <span className="animate-blink text-primary ml-0.5 font-light">|</span>
           </h1>
-          <p className="text-muted-foreground text-sm italic">
-            A signature that leaves an impression.
-          </p>
+          <p className="text-muted-foreground text-sm italic">A signature that leaves an impression.</p>
         </div>
 
         {/* Form Card */}
@@ -62,23 +60,15 @@ const Index = () => {
           <div className="rounded-xl border border-input bg-card shadow-md border-l-4 border-l-primary p-6">
             <div className="flex items-center gap-2 mb-5">
               <span className="w-2 h-2 rounded-full bg-primary" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                Details
-              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Details</span>
             </div>
             <SignatureForm data={data} onChange={setData} />
           </div>
         </div>
 
         {/* Preview Card */}
-        <div className="animate-fade-up-delay-2 animate-float">
-          <div className="rounded-xl border border-input bg-card shadow-md p-6">
-            <SignaturePreview
-              data={data}
-              darkPreview={darkPreview}
-              onToggleDark={() => setDarkPreview(!darkPreview)}
-            />
-          </div>
+        <div className="rounded-xl border border-input bg-card shadow-md p-6">
+          <SignaturePreview data={data} darkPreview={darkPreview} onToggleDark={() => setDarkPreview(!darkPreview)} />
         </div>
 
         {/* Actions */}
@@ -103,7 +93,12 @@ const Index = () => {
         <footer className="text-center animate-fade-up-delay-4">
           <p className="text-xs text-muted-foreground/60">
             Built by{" "}
-            <a href="https://glebstarchikov.nl/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href="https://glebstarchikov.nl/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Gleb Starchikov
             </a>
           </p>
