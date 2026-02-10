@@ -34,7 +34,7 @@ const ClearableInput = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all"
+        className="input-elevate w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all"
       />
       {value && (
         <button
@@ -56,8 +56,18 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
 
   return (
     <div className="space-y-4">
-      <ClearableInput label="Full Name" value={data.name} onChange={(v) => update("name", v)} placeholder="Your name" />
-      <ClearableInput label="Title" value={data.title} onChange={(v) => update("title", v)} placeholder="Your Title" />
+      <ClearableInput
+        label="Full Name"
+        value={data.name}
+        onChange={(v) => update("name", v)}
+        placeholder="Jane Smith"
+      />
+      <ClearableInput
+        label="Title"
+        value={data.title}
+        onChange={(v) => update("title", v)}
+        placeholder="Product Designer"
+      />
       <ClearableInput
         label="Phone"
         value={data.phone}
@@ -68,19 +78,19 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         label="Twitter / X"
         value={data.twitter}
         onChange={(v) => update("twitter", v)}
-        placeholder="@yourtag"
+        placeholder="@janesmith"
       />
       <ClearableInput
         label="Company Name"
         value={data.company}
         onChange={(v) => update("company", v)}
-        placeholder="Your company"
+        placeholder="Starco"
       />
       <ClearableInput
         label="Company URL"
         value={data.companyUrl}
         onChange={(v) => update("companyUrl", v)}
-        placeholder="https://example.com"
+        placeholder="https://starcoai.com"
       />
       <div className="space-y-1.5">
         <ClearableInput
