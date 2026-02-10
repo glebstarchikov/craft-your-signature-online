@@ -60,13 +60,13 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         label="Full Name"
         value={data.name}
         onChange={(v) => update("name", v)}
-        placeholder="Jane Smith"
+        placeholder="Gleb Starchikov"
       />
       <ClearableInput
         label="Title"
         value={data.title}
         onChange={(v) => update("title", v)}
-        placeholder="Product Designer"
+        placeholder="Product Owner"
       />
       <ClearableInput
         label="Phone"
@@ -78,7 +78,7 @@ const SignatureForm = ({ data, onChange }: SignatureFormProps) => {
         label="Twitter / X"
         value={data.twitter}
         onChange={(v) => update("twitter", v)}
-        placeholder="@janesmith"
+        placeholder="@exampletag"
       />
       <ClearableInput
         label="Company Name"

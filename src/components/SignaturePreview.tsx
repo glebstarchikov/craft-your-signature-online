@@ -81,14 +81,14 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
                     color: fg,
                   }}
                 >
-                  {data.name || "Your Name"}
+                  {data.name || "Gleb Starchikov"}
                 </span>
               </td>
             </tr>
             <tr>
               <td style={{ paddingBottom: hasContact ? 10 : 0 }}>
                 <span style={{ fontSize: 13, color: mutedFg }}>
-                  {data.title || "Your Title"} · {companyName}
+                  {data.title || "Product Owner"} · {companyName}
                 </span>
               </td>
             </tr>
@@ -153,12 +153,12 @@ export function generateSignatureHTML(data: SignatureData): string {
     </tr>
     <tr>
       <td style="padding-bottom:4px;">
-        <span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name || "Your Name"}</span>
+        <span style="font-size:15px;font-weight:600;color:#1a1a1a;">${data.name || "Gleb Starchikov"}</span>
       </td>
     </tr>
     <tr>
       <td style="padding-bottom:${hasContact ? "10" : "0"}px;">
-        <span style="font-size:13px;color:#737373;">${data.title || "Your Title"} · ${companyName}</span>
+        <span style="font-size:13px;color:#737373;">${data.title || "Product Owner"} · ${companyName}</span>
       </td>
     </tr>${
       hasContact
