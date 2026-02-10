@@ -1,40 +1,31 @@
 
 
-## Interactive Import Instructions
+## Standardise All Placeholders
 
-Transform the static list of instructions into a tabbed, step-by-step experience that's easier to follow and more engaging.
+Align every placeholder and default value across the form and preview so they tell a consistent story.
 
-### What changes
+### New standard values
 
-**Tabbed email client selector**
-- Replace the stacked list of all three clients with clickable tabs (Gmail, macOS Mail, iOS Mail) with icons
-- Only one client's instructions are visible at a time, reducing visual clutter
-
-**Step-by-step progression**
-- Show one step at a time with a "Next" / "Back" navigation and a progress indicator (dots or a small progress bar)
-- Each step is displayed in a larger, more readable format with a step number badge
-- A "Done" button on the final step closes the modal with a subtle success state
-
-**Visual enhancements**
-- Add simple icons for each email client tab (Mail, Settings gear, etc.) using lucide-react
-- Highlight actionable keywords in each step (e.g., bold "Settings", "Paste") so users can scan quickly
-- Animate step transitions with a gentle slide for a polished feel
-
-### Design details
-
-- Tabs sit at the top of the modal as pill-shaped buttons; the active one gets the primary color fill
-- The step card has a large circled number on the left and the instruction text on the right
-- Progress dots below the step card show how far along you are
-- Keyboard-friendly: arrow keys or Enter to advance steps
+| Field        | Placeholder / Default     |
+|--------------|---------------------------|
+| Full Name    | Gleb Starchikov           |
+| Title        | Product Owner             |
+| Phone        | +1 (555) 123-4567        |
+| Twitter / X  | @exampletag                   |
+| Company Name | Starco                    |
+| Company URL  | https://starcoai.com      |
+| Logo URL     | https://example.com/logo.png |
 
 ### Files to modify
 
-1. **`src/components/ImportModal.tsx`** -- Full rewrite of the modal content:
-   - Add state for `activeClient` (tab index) and `activeStep` (step index)
-   - Render tab buttons at the top with icons (Chrome/Globe for Gmail, Monitor for macOS, Smartphone for iOS)
-   - Show a single step at a time with animated transitions
-   - Add Next/Back buttons and progress dots
-   - Bold key action words in step text using a simple formatter (split on keywords like "Settings", "Paste", "Click", wrap in `<strong>`)
+1. **`src/components/SignatureForm.tsx`**
+   - Change the Name placeholder from "Jane Smith" to "Gleb Starchikov"
+   - Change the Title placeholder from "Product Designer" to "Product Owner"
+   - Change the Twitter placeholder from "@janesmith" to "@exampletag"
+   - Phone, Company Name, Company URL, and Logo URL placeholders already match -- no changes needed
 
-2. **`src/index.css`** -- Add a subtle slide-left / slide-right transition for step changes
+2. **`src/components/SignaturePreview.tsx`**
+   - In the preview component: change `data.name || "Your Name"` to `data.name || "Gleb Starchikov"` and `data.title || "Your Title"` to `data.title || "Product Owner"`
+   - In `generateSignatureHTML`: make the same two replacements (`"Your Name"` to `"Gleb Starchikov"`, `"Your Title"` to `"Product Owner"`)
+   - The company defaults ("Starco" / "https://starcoai.com") are already correct
 
