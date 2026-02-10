@@ -1,31 +1,17 @@
 
 
-## Standardise All Placeholders
+## Show Phone and Twitter Defaults in Preview
 
-Align every placeholder and default value across the form and preview so they tell a consistent story.
+Currently, the name, title, and company fields show placeholder defaults in the preview when empty, but phone and twitter do not. This makes them invisible until the user types something. We'll add fallback defaults so the preview always shows a complete, realistic signature.
 
-### New standard values
+### Changes
 
-| Field        | Placeholder / Default     |
-|--------------|---------------------------|
-| Full Name    | Gleb Starchikov           |
-| Title        | Product Owner             |
-| Phone        | +1 (555) 123-4567        |
-| Twitter / X  | @exampletag                   |
-| Company Name | Starco                    |
-| Company URL  | https://starcoai.com      |
-| Logo URL     | https://example.com/logo.png |
+**`src/components/SignaturePreview.tsx`**
 
-### Files to modify
+- Update `hasContact` to always be true when fallback values would apply (i.e., treat empty phone/twitter as having defaults)
+- Display `data.phone || "+1 (555) 123-4567"` instead of just `data.phone`
+- Display `data.twitter || "@exampletag"` instead of just `data.twitter`
+- Apply the same changes in the `generateSignatureHTML` function
 
-1. **`src/components/SignatureForm.tsx`**
-   - Change the Name placeholder from "Jane Smith" to "Gleb Starchikov"
-   - Change the Title placeholder from "Product Designer" to "Product Owner"
-   - Change the Twitter placeholder from "@janesmith" to "@exampletag"
-   - Phone, Company Name, Company URL, and Logo URL placeholders already match -- no changes needed
-
-2. **`src/components/SignaturePreview.tsx`**
-   - In the preview component: change `data.name || "Your Name"` to `data.name || "Gleb Starchikov"` and `data.title || "Your Title"` to `data.title || "Product Owner"`
-   - In `generateSignatureHTML`: make the same two replacements (`"Your Name"` to `"Gleb Starchikov"`, `"Your Title"` to `"Product Owner"`)
-   - The company defaults ("Starco" / "https://starcoai.com") are already correct
+This way the preview always shows the full signature layout, matching the form placeholders exactly.
 
