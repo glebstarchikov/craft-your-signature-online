@@ -1,55 +1,40 @@
 
 
-## Memorable Design Refresh
+## Interactive Import Instructions
 
-The goal is to make a recruiter pause and remember this tool when scrolling through your portfolio. The current layout is clean but flat -- we'll add personality through subtle motion, a strong visual hierarchy, and one signature design moment that sticks.
+Transform the static list of instructions into a tabbed, step-by-step experience that's easier to follow and more engaging.
 
-### Design Strategy
+### What changes
 
-Keep the minimalist soul but add **craft details** that show you care about polish -- exactly what recruiters look for in a portfolio piece.
+**Tabbed email client selector**
+- Replace the stacked list of all three clients with clickable tabs (Gmail, macOS Mail, iOS Mail) with icons
+- Only one client's instructions are visible at a time, reducing visual clutter
 
-### Changes
+**Step-by-step progression**
+- Show one step at a time with a "Next" / "Back" navigation and a progress indicator (dots or a small progress bar)
+- Each step is displayed in a larger, more readable format with a step number badge
+- A "Done" button on the final step closes the modal with a subtle success state
 
-**1. Hero section with personality (Index.tsx)**
-- Replace the plain heading with a two-line layout: a small mono-font label ("Email Signature Generator") above, and a large serif headline below with a word highlighted using an animated underline or gradient accent
-- Add a brief, confident tagline: something like "Craft a signature that leaves an impression." styled in muted italic
-- Add a subtle animated cursor/caret blinking next to the headline for a "live typing" feel
+**Visual enhancements**
+- Add simple icons for each email client tab (Mail, Settings gear, etc.) using lucide-react
+- Highlight actionable keywords in each step (e.g., bold "Settings", "Paste") so users can scan quickly
+- Animate step transitions with a gentle slide for a polished feel
 
-**2. Card-based layout (Index.tsx)**
-- Wrap the form and preview in distinct card containers with soft shadows and rounded corners
-- Add small section labels ("Details" / "Preview") with a colored dot indicator
-- Visually separate the two sections so the page reads like a polished app, not a plain form
+### Design details
 
-**3. Micro-interactions and motion (index.css + components)**
-- Add a gentle floating animation to the preview card (slow, subtle up-down bob) so it feels alive
-- Smooth input focus transitions: inputs slightly elevate (shadow) on focus
-- The "Copy Signature" button gets a satisfying scale-down on click and a brief confetti-like checkmark animation on success
-- Stagger the fade-up animations with slightly longer delays for a more cinematic entrance
-
-**4. Accent color pop**
-- Use the existing teal/green primary color more boldly: colored left border on the form card, a gradient tint on the copy button, and a small colored badge or pill near the headline
-- Keep everything else neutral so the accent pops
-
-**5. Footer / credit line (Index.tsx)**
-- Add a minimal footer: "Built by [Your Name]" with a subtle link style -- shows ownership and is portfolio-appropriate
-- Small text, sits at the bottom, doesn't distract
-
-**6. Background texture (index.css)**
-- Add a very subtle dot grid or noise texture to the page background using a CSS pattern -- adds depth without heaviness
-- Keep it barely visible so it's felt rather than seen
+- Tabs sit at the top of the modal as pill-shaped buttons; the active one gets the primary color fill
+- The step card has a large circled number on the left and the instruction text on the right
+- Progress dots below the step card show how far along you are
+- Keyboard-friendly: arrow keys or Enter to advance steps
 
 ### Files to modify
 
-1. **`src/pages/Index.tsx`** -- Restructure into hero + card layout, add footer, enhance button interactions
-2. **`src/index.css`** -- Add floating animation keyframes, dot-grid background pattern, input focus elevation styles, button press animation
-3. **`src/components/SignatureForm.tsx`** -- Wrap in card styling with section label and colored dot
-4. **`src/components/SignaturePreview.tsx`** -- Wrap in card styling with section label, add floating animation class
-5. **`src/components/ImportModal.tsx`** -- Minor polish: add enter/exit animation for consistency
+1. **`src/components/ImportModal.tsx`** -- Full rewrite of the modal content:
+   - Add state for `activeClient` (tab index) and `activeStep` (step index)
+   - Render tab buttons at the top with icons (Chrome/Globe for Gmail, Monitor for macOS, Smartphone for iOS)
+   - Show a single step at a time with animated transitions
+   - Add Next/Back buttons and progress dots
+   - Bold key action words in step text using a simple formatter (split on keywords like "Settings", "Paste", "Click", wrap in `<strong>`)
 
-### Technical details
+2. **`src/index.css`** -- Add a subtle slide-left / slide-right transition for step changes
 
-- All animations use CSS only (keyframes + transitions) -- no new dependencies
-- The dot-grid background uses a repeating CSS radial-gradient, purely decorative
-- The floating animation is a gentle `translateY` oscillation over ~6 seconds, subtle enough to not distract
-- Button press uses `transform: scale(0.97)` on `:active` for tactile feedback
-- Cards use the existing `--card` color variable with `shadow-md` for elevation
