@@ -5,6 +5,9 @@ interface SignatureData {
   title: string;
   phone: string;
   twitter: string;
+  company: string;
+  companyUrl: string;
+  logoText: string;
 }
 
 interface SignaturePreviewProps {
@@ -13,12 +16,15 @@ interface SignaturePreviewProps {
   onToggleDark: () => void;
 }
 
-const COMPANY_NAME = "Acme Inc.";
-const COMPANY_URL = "https://acme.com";
-const LOGO_TEXT = "ACME";
+const DEFAULT_COMPANY = "Starco";
+const DEFAULT_URL = "https://starcoai.com";
+const DEFAULT_LOGO = "STARCO";
 
 const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewProps) => {
   const hasContact = data.phone || data.twitter;
+  const companyName = data.company || DEFAULT_COMPANY;
+  const companyUrl = data.companyUrl || DEFAULT_URL;
+  const logoText = data.logoText || DEFAULT_LOGO;
   const bg = darkPreview ? "#1a1a1a" : "#ffffff";
   const fg = darkPreview ? "#e5e5e5" : "#1a1a1a";
   const mutedFg = darkPreview ? "#888888" : "#737373";
@@ -50,7 +56,7 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
             <tr>
               <td style={{ paddingBottom: 12 }}>
                 <a
-                  href={COMPANY_URL}
+                  href={companyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -61,7 +67,7 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
                     textDecoration: "none",
                   }}
                 >
-                  {LOGO_TEXT}
+                  {logoText}
                 </a>
               </td>
             </tr>
@@ -81,7 +87,7 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
             <tr>
               <td style={{ paddingBottom: hasContact ? 10 : 0 }}>
                 <span style={{ fontSize: 13, color: mutedFg }}>
-                  {data.title || "Your Title"} · {COMPANY_NAME}
+                  {data.title || "Your Title"} · {companyName}
                 </span>
               </td>
             </tr>
@@ -121,9 +127,9 @@ export default SignaturePreview;
 
 export function generateSignatureHTML(data: SignatureData): string {
   const hasContact = data.phone || data.twitter;
-  const COMPANY_NAME = "Acme Inc.";
-  const COMPANY_URL = "https://acme.com";
-  const LOGO_TEXT = "ACME";
+  const companyName = data.company || "Starco";
+  const companyUrl = data.companyUrl || "https://starcoai.com";
+  const logoText = data.logoText || "STARCO";
 
   const contactParts: string[] = [];
   if (data.phone) contactParts.push(data.phone);
@@ -138,7 +144,7 @@ export function generateSignatureHTML(data: SignatureData): string {
   <tbody>
     <tr>
       <td style="padding-bottom:12px;">
-        <a href="${COMPANY_URL}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${LOGO_TEXT}</a>
+        <a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${logoText}</a>
       </td>
     </tr>
     <tr>
@@ -148,7 +154,7 @@ export function generateSignatureHTML(data: SignatureData): string {
     </tr>
     <tr>
       <td style="padding-bottom:${hasContact ? "10" : "0"}px;">
-        <span style="font-size:13px;color:#737373;">${data.title || "Your Title"} · ${COMPANY_NAME}</span>
+        <span style="font-size:13px;color:#737373;">${data.title || "Your Title"} · ${companyName}</span>
       </td>
     </tr>${
       hasContact

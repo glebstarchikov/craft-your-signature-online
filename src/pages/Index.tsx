@@ -10,6 +10,9 @@ const Index = () => {
     title: "",
     phone: "",
     twitter: "",
+    company: "",
+    companyUrl: "",
+    logoText: "",
   });
   const [darkPreview, setDarkPreview] = useState(false);
   const [copied, setCopied] = useState(false);
