@@ -1,22 +1,8 @@
 
+## Two Cleanups
 
-## Remove All Fallback Defaults from Exported HTML
+### 1. Remove logo URL preview (SignatureForm.tsx)
+Remove the wrapper `<div className="space-y-1.5">` around the Logo URL input and the conditional image preview block beneath it (lines 95-115). Replace with a plain `ClearableInput` like the other fields.
 
-If the user hasn't filled in a field, it should be completely absent from the copied HTML. If nothing at all is provided, the result is an empty string.
-
-### Changes
-
-**`src/components/SignaturePreview.tsx`** -- `generateSignatureHTML` function only
-
-- **Name**: Remove `data.name || "Gleb Starchikov"` fallback. Only render the name row if `data.name` is non-empty.
-- **Title**: Remove `data.title || "Product Owner"` fallback. Only render the title row if `data.title` is non-empty.
-- **Company**: Remove `data.company || "Starco"` and `data.companyUrl || "https://starcoai.com"` fallbacks. Only render the logo/company row if `data.company` or `data.logoUrl` is non-empty.
-- **Phone / Twitter**: Already conditional (current behavior is correct).
-- **Entire table**: If no rows exist at all, return an empty string instead of an empty `<table>` tag.
-
-The preview component continues to show placeholder defaults visually -- no changes there.
-
-### Technical detail
-
-Build each row as an optional string, then join them. If all are empty, return `""`. Otherwise wrap in the `<table>` shell.
-
+### 2. Remove transition from preview box (SignaturePreview.tsx)
+Remove `transition-colors duration-300` from the preview container class on line 53, leaving just `rounded-xl border border-input p-6`.
