@@ -126,8 +126,6 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
 export default SignaturePreview;
 
 export function generateSignatureHTML(data: SignatureData): string {
-  const phone = data.phone || "+1 (555) 123-4567";
-  const twitter = data.twitter || "@exampletag";
   const companyName = data.company || "Starco";
   const companyUrl = data.companyUrl || "https://starcoai.com";
 
@@ -135,8 +133,25 @@ export function generateSignatureHTML(data: SignatureData): string {
     ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img src="${data.logoUrl}" alt="${companyName}" style="display:block;max-height:40px;" /></a>`
     : `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${companyName}</a>`;
 
-  const handle = twitter.replace("@", "");
-  const contactHtml = `${phone} · <a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${twitter}</a>`;
+  const hasPhone = !!data.phone.trim();
+  const hasTwitter = !!data.twitter.trim();
+  const hasContact = hasPhone || hasTwitter;
+
+  let contactHtml = "";
+  if (hasContact) {
+    const parts: string[] = [];
+    if (hasPhone) parts.push(data.phone);
+    if (hasTwitter) {
+      const handle = data.twitter.replace("@", "");
+      parts.push(`<a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${data.twitter}</a>`);
+    }
+    contactHtml = `
+    <tr>
+      <td style="padding-top:10px;border-top:1px solid #e5e5e5;">
+        <span style="font-size:13px;color:#737373;">${parts.join(" · ")}</span>
+      </td>
+    </tr>`;
+  }
 
   return `<table cellpadding="0" cellspacing="0" style="font-family:'DM Sans',Arial,sans-serif;font-size:14px;">
   <tbody>
@@ -151,15 +166,10 @@ export function generateSignatureHTML(data: SignatureData): string {
       </td>
     </tr>
     <tr>
-      <td style="padding-bottom:10px;">
+      <td style="padding-bottom:${hasContact ? "10" : "0"}px;">
         <span style="font-size:13px;color:#737373;">${data.title || "Product Owner"} · ${companyName}</span>
       </td>
-    </tr>
-    <tr>
-      <td style="padding-top:10px;border-top:1px solid #e5e5e5;">
-        <span style="font-size:13px;color:#737373;">${contactHtml}</span>
-      </td>
-    </tr>
+    </tr>${contactHtml}
   </tbody>
 </table>`;
 }
