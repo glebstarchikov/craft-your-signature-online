@@ -20,7 +20,9 @@ const DEFAULT_COMPANY = "Starco";
 const DEFAULT_URL = "https://starcoai.com";
 
 const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewProps) => {
-  const hasContact = data.phone || data.twitter;
+  const phone = data.phone || "+1 (555) 123-4567";
+  const twitter = data.twitter || "@exampletag";
+  const hasContact = true;
   const companyName = data.company || DEFAULT_COMPANY;
   const companyUrl = data.companyUrl || DEFAULT_URL;
   const bg = darkPreview ? "#1a1a1a" : "#ffffff";
@@ -101,18 +103,15 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
                   }}
                 >
                   <span style={{ fontSize: 13, color: mutedFg }}>
-                    {data.phone}
-                    {data.phone && data.twitter && " · "}
-                    {data.twitter && (
-                      <a
-                        href={`https://x.com/${data.twitter.replace("@", "")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: mutedFg, textDecoration: "none" }}
-                      >
-                        {data.twitter}
-                      </a>
-                    )}
+                    {phone} ·{" "}
+                    <a
+                      href={`https://x.com/${twitter.replace("@", "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: mutedFg, textDecoration: "none" }}
+                    >
+                      {twitter}
+                    </a>
                   </span>
                 </td>
               </tr>
@@ -127,7 +126,8 @@ const SignaturePreview = ({ data, darkPreview, onToggleDark }: SignaturePreviewP
 export default SignaturePreview;
 
 export function generateSignatureHTML(data: SignatureData): string {
-  const hasContact = data.phone || data.twitter;
+  const phone = data.phone || "+1 (555) 123-4567";
+  const twitter = data.twitter || "@exampletag";
   const companyName = data.company || "Starco";
   const companyUrl = data.companyUrl || "https://starcoai.com";
 
@@ -135,14 +135,8 @@ export function generateSignatureHTML(data: SignatureData): string {
     ? `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img src="${data.logoUrl}" alt="${companyName}" style="display:block;max-height:40px;" /></a>`
     : `<a href="${companyUrl}" target="_blank" rel="noopener noreferrer" style="font-size:16px;font-weight:700;letter-spacing:2px;color:#737373;text-decoration:none;">${companyName}</a>`;
 
-  const contactParts: string[] = [];
-  if (data.phone) contactParts.push(data.phone);
-  if (data.twitter) {
-    const handle = data.twitter.replace("@", "");
-    contactParts.push(
-      `<a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${data.twitter}</a>`
-    );
-  }
+  const handle = twitter.replace("@", "");
+  const contactHtml = `${phone} · <a href="https://x.com/${handle}" target="_blank" rel="noopener noreferrer" style="color:#737373;text-decoration:none;">${twitter}</a>`;
 
   return `<table cellpadding="0" cellspacing="0" style="font-family:'DM Sans',Arial,sans-serif;font-size:14px;">
   <tbody>
@@ -157,19 +151,15 @@ export function generateSignatureHTML(data: SignatureData): string {
       </td>
     </tr>
     <tr>
-      <td style="padding-bottom:${hasContact ? "10" : "0"}px;">
+      <td style="padding-bottom:10px;">
         <span style="font-size:13px;color:#737373;">${data.title || "Product Owner"} · ${companyName}</span>
       </td>
-    </tr>${
-      hasContact
-        ? `
+    </tr>
     <tr>
       <td style="padding-top:10px;border-top:1px solid #e5e5e5;">
-        <span style="font-size:13px;color:#737373;">${contactParts.join(" · ")}</span>
+        <span style="font-size:13px;color:#737373;">${contactHtml}</span>
       </td>
-    </tr>`
-        : ""
-    }
+    </tr>
   </tbody>
 </table>`;
 }
