@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { X, Globe, Monitor, Smartphone, ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { X, Globe, Monitor, Smartphone, ChevronRight, ChevronLeft, Check, Mail } from "lucide-react";
 
 interface ImportModalProps {
   open: boolean;
@@ -37,6 +37,17 @@ const clients = [
       "Select the account you want to update",
       "Clear the existing signature and **Paste** the new one",
       "Close **Settings** — changes save automatically",
+    ],
+  },
+  {
+    title: "Outlook",
+    icon: Mail,
+    steps: [
+      "Open Outlook → **File** → **Options** → **Mail**",
+      "**Click** **Signatures** in the Compose messages section",
+      "**Click** **New**, name your signature",
+      "**Paste** the copied signature into the editor",
+      "**Click** **OK** to save and close",
     ],
   },
 ];
