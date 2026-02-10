@@ -49,7 +49,7 @@ const ImportModal = ({ open, onClose }: ImportModalProps) => {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg rounded-2xl border border-input bg-background p-6 shadow-xl animate-fade-up">
+      <div className="relative w-full max-w-lg rounded-2xl border border-input bg-card p-6 shadow-xl animate-fade-up">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-serif text-xl text-foreground">
             How to import your signature
